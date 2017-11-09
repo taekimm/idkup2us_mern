@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getLocation } from '../actions/index';
+
 import GoogleMap from '../components/google_map';
+import SideBar from './sidebar';
 
 class App extends Component {
     constructor(props) {
@@ -14,8 +16,18 @@ class App extends Component {
                 lat: 0,
                 long: 0
             },
-            // search params
+            // map variables
             radiusInMiles: 1,
+
+            // search variables
+            search: {
+                radius: 0,
+                lat: 0,
+                long: 0,
+                categories: '',
+                limit: 20,
+                price: '',
+            }
         }
     }
 
@@ -24,10 +36,11 @@ class App extends Component {
         let promise = this.props.getLocation();
         // once received
         promise.then( (val) => {
-            this.setState({coords: {
+            this.setState({
+                coords: {
                     lat: val.payload.coords.latitude,
                     long: val.payload.coords.longitude,
-                }
+                },
             });
             console.log('log within promise', this.state);
         }, () => {
@@ -40,8 +53,8 @@ class App extends Component {
     render() {
         return (
             <div>
-                {/* <div id='googleMap' style={{height: 300 + 'px'}}/> */}
                 <GoogleMap coords={this.state.coords} radiusInMiles={this.state.radiusInMiles} />
+                <SideBar />
             </div>
         );
     }

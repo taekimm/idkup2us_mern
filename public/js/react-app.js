@@ -2230,7 +2230,7 @@ var _app = __webpack_require__(79);
 
 var _app2 = _interopRequireDefault(_app);
 
-var _reducers = __webpack_require__(81);
+var _reducers = __webpack_require__(82);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -24282,6 +24282,10 @@ var _google_map = __webpack_require__(80);
 
 var _google_map2 = _interopRequireDefault(_google_map);
 
+var _sidebar = __webpack_require__(84);
+
+var _sidebar2 = _interopRequireDefault(_sidebar);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24304,8 +24308,18 @@ var App = function (_Component) {
                 lat: 0,
                 long: 0
             },
-            // search params
-            radiusInMiles: 1
+            // map variables
+            radiusInMiles: 1,
+
+            // search variables
+            search: {
+                radius: 0,
+                lat: 0,
+                long: 0,
+                categories: '',
+                limit: 20,
+                price: ''
+            }
         };
         return _this;
     }
@@ -24319,7 +24333,8 @@ var App = function (_Component) {
             var promise = this.props.getLocation();
             // once received
             promise.then(function (val) {
-                _this2.setState({ coords: {
+                _this2.setState({
+                    coords: {
                         lat: val.payload.coords.latitude,
                         long: val.payload.coords.longitude
                     }
@@ -24336,7 +24351,8 @@ var App = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_google_map2.default, { coords: this.state.coords, radiusInMiles: this.state.radiusInMiles })
+                _react2.default.createElement(_google_map2.default, { coords: this.state.coords, radiusInMiles: this.state.radiusInMiles }),
+                _react2.default.createElement(_sidebar2.default, null)
             );
         }
     }]);
@@ -24453,7 +24469,8 @@ var GoogleMap = function (_Component) {
 exports.default = GoogleMap;
 
 /***/ }),
-/* 81 */
+/* 81 */,
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24465,7 +24482,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(7);
 
-var _reducers_location = __webpack_require__(82);
+var _reducers_location = __webpack_require__(83);
 
 var _reducers_location2 = _interopRequireDefault(_reducers_location);
 
@@ -24478,7 +24495,7 @@ var rootReducer = (0, _redux.combineReducers)({
 exports.default = rootReducer;
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24501,6 +24518,119 @@ exports.default = function () {
 };
 
 var _index = __webpack_require__(30);
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SideBar = function (_Component) {
+    _inherits(SideBar, _Component);
+
+    function SideBar(props) {
+        _classCallCheck(this, SideBar);
+
+        var _this = _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
+
+        _this.state = {
+            radius: 0,
+            lat: 0,
+            long: 0,
+            categories: '',
+            limit: 20,
+            price: '',
+            price1: true,
+            price2: true,
+            price3: false,
+            price4: false
+        };
+
+        _this.handleCheckboxChange = _this.handleCheckboxChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(SideBar, [{
+        key: 'handleCheckboxChange',
+        value: function handleCheckboxChange(event) {
+            console.log(event);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement('input', {
+                    name: 'radius',
+                    type: 'number'
+                }),
+                _react2.default.createElement('input', {
+                    name: 'limit',
+                    type: 'number'
+                }),
+                _react2.default.createElement('input', {
+                    name: 'categories',
+                    type: 'text'
+                }),
+                _react2.default.createElement('input', {
+                    name: 'price1',
+                    type: 'checkbox',
+                    checked: this.state.price1,
+                    onChange: this.handleCheckboxChange
+                }),
+                _react2.default.createElement('input', {
+                    name: 'price2',
+                    type: 'checkbox',
+                    checked: this.state.price2,
+                    onChange: this.handleCheckboxChange
+                }),
+                _react2.default.createElement('input', {
+                    name: 'price3',
+                    type: 'checkbox',
+                    checked: this.state.price3,
+                    onChange: this.handleCheckboxChange
+                }),
+                _react2.default.createElement('input', {
+                    name: 'price4',
+                    type: 'checkbox',
+                    checked: this.state.price4,
+                    onChange: this.handleCheckboxChange
+                }),
+                _react2.default.createElement(
+                    'button',
+                    {
+                        type: 'submit'
+                    },
+                    'Search!'
+                )
+            );
+        }
+    }]);
+
+    return SideBar;
+}(_react.Component);
+
+exports.default = SideBar;
 
 /***/ })
 /******/ ]);
