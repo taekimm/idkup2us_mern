@@ -15,11 +15,7 @@ class App extends Component {
                 long: 0
             },
             // search params
-            radiusInMiles: 5,
-
-            // // google map stuff
-            // googleMapsCircle: '',
-            // googleMap: '',
+            radiusInMiles: 1,
         }
     }
 
@@ -28,17 +24,11 @@ class App extends Component {
         let promise = this.props.getLocation();
         // once received
         promise.then( (val) => {
-            // this.setState({
-            //     lat: val.payload.coords.latitude,
-            //     long: val.payload.coords.longitude
-            // });
-            this.setState(prevState => ({
-                coords: {
+            this.setState({coords: {
                     lat: val.payload.coords.latitude,
                     long: val.payload.coords.longitude,
                 }
-            }));
-            // this.generateMap(this.state.coords);
+            });
             console.log('log within promise', this.state);
         }, () => {
             // Error on promise received
@@ -46,50 +36,6 @@ class App extends Component {
         })
 
     }
-
-    // generateMap(coords) {
-    //     // Map options variable for creation of google maps
-    //     const mapOptions = {
-    //         zoom: 15,
-    //         mapTypeId: google.maps.MapTypeId.ROADMAP
-    //     };
-
-    //     // Map variable for actual google maps
-    //     const map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
-
-    //     // saving map variable to state to reference later
-    //     this.setState({googleMap: map})
-
-    //     // google maps LatLng obj for marker
-    //     const positionForMarker = new google.maps.LatLng(coords.lat, coords.long);
-
-    //     // google maps marker obj for curr location
-    //     const marker = new google.maps.Marker({
-    //         map: map,
-    //         position: positionForMarker
-    //     });
-
-    //     // Setting map center
-    //     map.setCenter(positionForMarker);
-
-    //     // create circle showing search mile radius
-    //     const circle = new google.maps.Circle({
-    //         map: map,
-    //         radius: this.state.radiusInMiles * 1609.34,
-    //         fillColor: '#AA0000'
-    //     });
-
-    //     // saving circle to state, so it can be changed later
-    //     this.setState({
-    //         googleMapsCircle: circle
-    //     })
-
-    //     // bind circle variable to curr location
-    //     circle.bindTo('center', marker, 'position');
-        
-    //     // change map bounds to fit circle
-    //     map.fitBounds(circle.getBounds());
-    // }
 
     render() {
         return (

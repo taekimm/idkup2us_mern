@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 class GoogleMap extends Component {
-    componentDidMount() {
-        console.log(this.props.coords);
-        this.generateMap(this.props.coords, this.props.radiusInMiles);
+    componentWillReceiveProps(nextProps) {
+        this.generateMap(nextProps.coords, nextProps.radiusInMiles);
     }
 
     generateMap(coords, radius) {
