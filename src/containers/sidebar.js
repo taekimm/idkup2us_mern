@@ -1,76 +1,86 @@
 import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import CheckboxGroup from '../components/checkboxgroup';
 
 class SideBar extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            radius: 0,
-            lat: 0,
-            long: 0,
-            categories: '',
-            limit: 20,
-            price: '',
-            price1: true,
-            price2: true,
-            price3: false,
-            price4: false,
-        }
-
-        this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    renderField(field) {
+        return (
+            <div>
+                <label>{field.label}</label>
+                <input
+                    type={field.type}
+                    {...field.input}
+                />
+            </div>
+        );
     }
 
-    handleCheckboxChange(event) {
-        console.log(event);
+    renderCheckboxes(field) {
+        return (
+            <div>
+                <label>{field.label}</label>
+                <input
+                    type={field.type}
+                    {...field.input}
+                />
+            </div>
+        )
+    }
+
+    onSubmit(values) {
+        console.log(values);
     }
 
     render() {
+        const { handleSubmit } = this.props;
+
+        const checkboxes = [
+            { label: '$', value: '$' },
+            { label: '$$', value: '$$' },
+            { label: '$$$', value: '$$$' },
+            { label: '$$$$', value: '$$$$' }
+        ]
+
+        const style = {
+            display: 'block'
+        }
+
         return (
             <div>
-                <input
-                    name='radius'
-                    type='number'
-                />
-                <input
-                    name='limit'
-                    type='number'
-                />
-                <input
-                    name='categories'
-                    type='text'
-                />
-                <input
-                    name='price1'
-                    type='checkbox'
-                    checked={this.state.price1}
-                    onChange={this.handleCheckboxChange}
-                />
-                <input
-                    name='price2'
-                    type='checkbox'
-                    checked={this.state.price2}
-                    onChange={this.handleCheckboxChange}
-                />
-                <input
-                    name='price3'
-                    type='checkbox'
-                    checked={this.state.price3}
-                    onChange={this.handleCheckboxChange}
-                />
-                <input
-                    name='price4'
-                    type='checkbox'
-                    checked={this.state.price4}
-                    onChange={this.handleCheckboxChange}
-                />
-                <button
-                    type='submit'
-                >
-                    Search!
-                </button>
+                <form onSubmit={handleSubmit(this.onSubmit.bind(this))} >
+                    <Field
+                        label="Select mile radius for search: "
+                        type="number"
+                        name="radius"
+                        component={this.renderField}
+                    />
+                    <Field
+                        label="Select # of results to pick from: "
+                        type="number"
+                        name="numResult"
+                        component={this.renderField}
+                    />
+                    <Field
+                        label="Categories are seperated by commas: "
+                        type="text"
+                        name="categories"
+                        component={this.renderField}
+                    />
+                    <label>Price Range :</label>
+                    <CheckboxGroup
+                        name='price' 
+                        options={checkboxes}
+                    />
+                    <button style={style} type="submit">Submit</button>
+                </form>
             </div>
         );
     }
 }
 
-export default SideBar;
+export default reduxForm({
+    form: 'SidebarForm'
+})(
+    connect(null)(SideBar)
+);

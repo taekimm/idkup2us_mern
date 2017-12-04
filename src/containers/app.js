@@ -5,6 +5,7 @@ import { getLocation } from '../actions/index';
 import { Checkbox, CheckboxGroup } from 'react-checkbox-group';
 
 import GoogleMap from '../components/google_map';
+import SideBar from './sidebar';
 
 class App extends Component {
     constructor(props) {
@@ -110,37 +111,8 @@ class App extends Component {
         return (
             <div>
                 <GoogleMap coords={this.state.coords} radiusInMiles={this.state.radiusInMiles} />
-                <div>
-                    <form onSubmit={this.handleFormSubmit}>
-                        <input
-                            name='radius'
-                            type='number'
-                        />
-                        <input
-                            name='limit'
-                            type='number'
-                        />
-                        <input
-                            name='categories'
-                            type='text'
-                        />
-                        <CheckboxGroup
-                            name='prices'
-                            value={this.state.search.priceArray}
-                            onChange={this.handleCheckboxChange}>
-                            <label><Checkbox value='$' />$</label>
-                            <label><Checkbox value='$$' />$$</label>
-                            <label><Checkbox value='$$$' />$$$</label>
-                            <label><Checkbox value='$$$$' />$$$$</label>
-                        </CheckboxGroup>
-                        <button
-                            type='submit'
-                        >
-                            Search!
-                    </button>
-                    </form>
-                </div>
                 <button onClick={this.handleClick}>Console Log</button>
+                <SideBar />
             </div>
         );
     }
